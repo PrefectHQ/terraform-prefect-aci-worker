@@ -3,7 +3,7 @@ data "azurerm_resource_group" "this" {
 }
 
 locals {
-  container_instance_name = coalesce(var.container_instance_name_override, "prefect-worker-${lower(var.work_pool_name)}")
+  container_instance_name           = coalesce(var.container_instance_name_override, "prefect-worker-${lower(var.work_pool_name)}")
   container_instance_container_name = coalesce(var.container_instance_container_name_override, local.container_instance_name)
 }
 

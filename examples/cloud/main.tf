@@ -54,17 +54,17 @@ data "utils_deep_merge_json" "base_job_config" {
 resource "prefect_work_pool" "this" {
   name = "aci-work-pool"
   type = "aci"
-  
+
   base_job_template = data.utils_deep_merge_json.base_job_config.output
 }
 
 module "aci_worker" {
-  source = "prefecthq/aci-worker/prefect"
+  source  = "prefecthq/aci-worker/prefect"
   version = ">= 0.0.1"
 
   prefect_api_url = "https://api.prefect.cloud/api/accounts/${data.prefect_account.this.id}/workspaces/${data.prefect_workspace.this.id}"
   prefect_api_key = prefect_service_account.this.api_key
 
   resource_group_name = azurerm_resource_group.this.name
-  work_pool_name = prefect_work_pool.this.name
+  work_pool_name      = prefect_work_pool.this.name
 }

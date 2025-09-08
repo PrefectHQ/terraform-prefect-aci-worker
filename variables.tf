@@ -66,12 +66,12 @@ variable "tags" {
 
 variable "container_instance_name_override" {
   description = "Overrides the generated Azure Container Instance resource name"
-  type = string
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "container_instance_container_name_override" {
   description = "Overrides the generated Azure Container Instance container resource name"
-  type = string
-  default = null
+  type        = string
+  default     = null
 }
