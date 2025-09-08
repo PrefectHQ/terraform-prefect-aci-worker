@@ -43,7 +43,7 @@ terraform apply
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aci_worker"></a> [aci\_worker](#module\_aci\_worker) | .. | n/a |
+| <a name="module_aci_worker"></a> [aci\_worker](#module\_aci\_worker) | prefecthq/aci-worker/prefect | >= 0.0.1 |
 
 ## Resources
 

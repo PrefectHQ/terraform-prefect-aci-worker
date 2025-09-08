@@ -32,7 +32,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aci_worker"></a> [aci\_worker](#module\_aci\_worker) | .. | n/a |
+| <a name="module_aci_worker"></a> [aci\_worker](#module\_aci\_worker) | prefecthq/aci-worker/prefect | >= 0.0.1 |
 
 ## Resources
 
@@ -40,7 +40,12 @@ No resources.
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_prefect_api_key"></a> [prefect\_api\_key](#input\_prefect\_api\_key) | The Prefect API key used by this Worker | `string` | n/a | yes |
+| <a name="input_prefect_api_url"></a> [prefect\_api\_url](#input\_prefect\_api\_url) | The API URL for the Prefect instance (e.g. https://api.prefect.cloud/api/accounts/<account\_id>/workspace/<workspace\_id> | `string` | n/a | yes |
+| <a name="input_azure_resource_group_name"></a> [azure\_resource\_group\_name](#input\_azure\_resource\_group\_name) | The Azure Resource Group name to deploy the Prefect ACI worker to | `string` | `"example"` | no |
+| <a name="input_prefect_work_pool_name"></a> [prefect\_work\_pool\_name](#input\_prefect\_work\_pool\_name) | The name of the Prefect Work Pool this ACI instance will be attached to | `string` | `"Terraform-ACI-Example"` | no |
 
 ## Outputs
 
