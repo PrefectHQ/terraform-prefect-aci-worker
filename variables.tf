@@ -3,16 +3,9 @@ variable "work_pool_name" {
   type        = string
 }
 
-variable "registry_name" {
-  description = "Name for Azure Container Registry (must be globally unique)"
-  type        = string
-  default     = "prefectaciregistry"
-}
-
 variable "resource_group_name" {
   description = "Name for the Azure Resource Group"
   type        = string
-  default     = "pre-sales-se"
 }
 
 variable "location" {
@@ -24,7 +17,6 @@ variable "location" {
 variable "prefect_api_url" {
   description = "Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID)"
   type        = string
-  sensitive   = true
 }
 
 variable "prefect_api_key" {
@@ -36,7 +28,7 @@ variable "prefect_api_key" {
 variable "prefect_image_tag" {
   description = "Prefect Docker image tag"
   type        = string
-  default     = "3-latest"
+  default     = "prefecthq/prefect:3-python3.11"
 }
 
 variable "container_cpu" {
@@ -70,4 +62,16 @@ variable "tags" {
     Environment = "prefect"
     Purpose     = "worker-pool"
   }
+}
+
+variable "container_instance_name_override" {
+  description = "Overrides the generated Azure Container Instance resource name"
+  type = string
+  default = null
+}
+
+variable "container_instance_container_name_override" {
+  description = "Overrides the generated Azure Container Instance container resource name"
+  type = string
+  default = null
 }

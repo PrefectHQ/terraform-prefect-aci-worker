@@ -2,6 +2,11 @@ data "azurerm_resource_group" "this" {
   name = var.resource_group_name
 }
 
+locals {
+  container_instance_name = coalesce(var.container_instance_name_override, "prefect-worker-${lower(var.work_pool_name)}")
+  container_instance_container_name = coalesce(var.container_instance_container_name_override, local.container_instance_name)
+}
+
 # User Assigned Managed Identity
 resource "azurerm_user_assigned_identity" "worker_identity" {
   name                = "${var.work_pool_name}-identity"
@@ -40,7 +45,7 @@ resource "azurerm_role_assignment" "container_instances_contributor" {
 
 # Container Instance for Prefect Worker
 resource "azurerm_container_group" "prefect_worker" {
-  name                = var.work_pool_name
+  name                = local.container_instance_name
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
   os_type             = "Linux"
@@ -54,7 +59,7 @@ resource "azurerm_container_group" "prefect_worker" {
   dns_name_label  = var.dns_name_label
 
   container {
-    name   = var.work_pool_name
+    name   = local.container_instance_container_name
     image  = var.prefect_image_tag
     cpu    = var.container_cpu
     memory = var.container_memory
