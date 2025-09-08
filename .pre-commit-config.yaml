@@ -3,6 +3,7 @@ repos:
     rev: v2.2.4
     hooks:
       - id: codespell
+        args: ["-L", "aci"]
   - repo: https://github.com/terraform-docs/terraform-docs
     rev: v0.16.0
     hooks:
