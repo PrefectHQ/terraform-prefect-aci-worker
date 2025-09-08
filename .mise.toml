@@ -4,7 +4,7 @@ terraform = '1.10.1'
 terraform-docs = '0.19.0'
 
 [tasks.tf-docs]
-run = "terraform-docs markdown table --output-file README.md ."
+run = "terraform-docs --config=.terraform-docs.yaml ."
 
 [tasks.test]
 run = "terraform test"
