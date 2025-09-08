@@ -8,7 +8,8 @@ repos:
     hooks:
       - id: terraform-docs-system
         args:
-          - "--args=--config=.terraform-docs.yaml"
+          - "--config=.terraform-docs.yaml"
+          - "."
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.83.5
     hooks:
