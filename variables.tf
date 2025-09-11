@@ -14,6 +14,22 @@ variable "location" {
   default     = "eastus"
 }
 
+variable "user_assigned_identity_name_override" {
+  description = "Override the generated User Assigned Identity name"
+  type        = string
+  default     = null
+  
+  validation {
+    condition = var.user_assigned_identity_name_override == null || (length(var.user_assigned_identity_name_override) > 0 && length(var.user_assigned_identity_name_override) <= 24)
+    error_message = "Name must be less than 24 characters."
+  }
+
+  validation {
+    condition     = var.user_assigned_identity_name_override == null || can(regex("^[A-Za-z0-9_-]+$", var.user_assigned_identity_name_override))
+    error_message = "The value may only contain alphanumeric characters, underscores, and dashes."
+  }
+}
+
 variable "prefect_api_url" {
   description = "Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID)"
   type        = string

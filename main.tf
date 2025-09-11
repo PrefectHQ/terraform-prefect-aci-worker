@@ -9,7 +9,7 @@ locals {
 
 # User Assigned Managed Identity
 resource "azurerm_user_assigned_identity" "worker_identity" {
-  name                = "${var.work_pool_name}-identity"
+  name                = coalesce(var.user_assigned_identity_name_override, "prefect-${lower(var.work_pool_name)}")
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
 
