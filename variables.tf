@@ -89,10 +89,7 @@ variable "container_dns_name_label" {
 variable "tags" {
   description = "Tags to apply to all resources"
   type        = map(string)
-  default = {
-    Environment = "prefect"
-    Purpose     = "worker-pool"
-  }
+  default     = {}
 }
 
 variable "container_instance_name_override" {
