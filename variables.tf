@@ -43,13 +43,19 @@ variable "container_memory" {
   default     = "1.5"
 }
 
-variable "ip_address_type" {
+variable "container_ip_address_type" {
   description = "IP address type for the container group (Public, Private, None)"
   type        = string
   default     = "Public"
 }
 
-variable "dns_name_label" {
+variable "container_subnet_ids" {
+  description = "IDs of the subnets the container instance should be placed in"
+  type = set(string)
+  default     = null
+}
+
+variable "container_dns_name_label" {
   description = "DNS name label for the container group"
   type        = string
   default     = null

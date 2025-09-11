@@ -55,8 +55,10 @@ resource "azurerm_container_group" "prefect_worker" {
     identity_ids = [azurerm_user_assigned_identity.worker_identity.id]
   }
 
-  ip_address_type = var.ip_address_type
-  dns_name_label  = var.dns_name_label
+  ip_address_type = var.container_ip_address_type
+  subnet_ids = var.container_subnet_ids
+
+  dns_name_label  = var.container_dns_name_label
 
   container {
     name   = local.container_instance_container_name
@@ -85,7 +87,7 @@ resource "azurerm_container_group" "prefect_worker" {
 
   lifecycle {
     precondition {
-      condition     = var.ip_address_type == "Public" && var.dns_name_label == null
+      condition     = var.container_ip_address_type == "Public" && var.container_dns_name_label == null
       error_message = "dns_name_label must be defined when ip_address_type is 'Public'"
     }
   }
