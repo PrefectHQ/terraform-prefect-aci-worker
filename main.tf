@@ -16,31 +16,19 @@ resource "azurerm_user_assigned_identity" "worker_identity" {
   tags = var.tags
 }
 
-# Custom Role Definition for Container Instances
-resource "azurerm_role_definition" "container_instances_contributor" {
-  name        = "Container Instances Contributor"
-  scope       = data.azurerm_resource_group.this.id
-  description = "Can create, delete, and monitor container instances."
-
-  permissions {
-    actions = [
-      "Microsoft.ManagedIdentity/userAssignedIdentities/assign/action",
-      "Microsoft.Resources/deployments/*",
-      "Microsoft.ContainerInstance/containerGroups/*"
-    ]
-    not_actions = []
-  }
-
-  assignable_scopes = [
-    data.azurerm_resource_group.this.id
-  ]
+data "azurerm_role_definition" "this" {
+  for_each = var.prefect_worker_azure_managed_role_attachment
+  
+  name = each.value
 }
 
-# Role Assignment: Container Instances Contributor
-resource "azurerm_role_assignment" "container_instances_contributor" {
+# Attach Azure Managed roles to the User Identity
+resource "azurerm_role_assignment" "this" {
+  for_each = var.prefect_worker_azure_managed_role_attachment
+  
   scope              = data.azurerm_resource_group.this.id
-  role_definition_id = azurerm_role_definition.container_instances_contributor.role_definition_resource_id
   principal_id       = azurerm_user_assigned_identity.worker_identity.principal_id
+  role_definition_id = data.azurerm_role_definition.this[each.key].role_definition_id
 }
 
 # Container Instance for Prefect Worker

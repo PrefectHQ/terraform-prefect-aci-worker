@@ -30,6 +30,15 @@ variable "user_assigned_identity_name_override" {
   }
 }
 
+variable "prefect_worker_azure_managed_role_attachment" {
+  description = "Azure Managed roles to attach to the Prefect Worker's Azure User Assigned Identity"
+  type = set(string)
+  default = [
+    "Azure Container Instances Contributor Role",
+    "Managed Identity Operator"
+  ]
+}
+
 variable "prefect_api_url" {
   description = "Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID)"
   type        = string
