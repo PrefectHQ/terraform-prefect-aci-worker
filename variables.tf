@@ -6,9 +6,9 @@ variable "work_pool_name" {
 variable "resource_group_name" {
   description = "Name for the Azure Resource Group"
   type        = string
-  
+
   validation {
-    condition = var.resource_group_name != ""
+    condition     = var.resource_group_name != ""
     error_message = "Variable `resource_group_name` must be defined"
   }
 }
@@ -23,9 +23,9 @@ variable "user_assigned_identity_name_override" {
   description = "Override the generated User Assigned Identity name"
   type        = string
   default     = null
-  
+
   validation {
-    condition = var.user_assigned_identity_name_override == null ? true : (length(var.user_assigned_identity_name_override) > 0 && length(var.user_assigned_identity_name_override) <= 24)
+    condition     = var.user_assigned_identity_name_override == null ? true : (length(var.user_assigned_identity_name_override) > 0 && length(var.user_assigned_identity_name_override) <= 24)
     error_message = "Name must be less than 24 characters."
   }
 
@@ -37,7 +37,7 @@ variable "user_assigned_identity_name_override" {
 
 variable "prefect_worker_azure_managed_role_attachment" {
   description = "Azure Managed roles to attach to the Prefect Worker's Azure User Assigned Identity"
-  type = set(string)
+  type        = set(string)
   default = [
     "Azure Container Instances Contributor Role",
     "Managed Identity Operator"
@@ -47,9 +47,9 @@ variable "prefect_worker_azure_managed_role_attachment" {
 variable "prefect_api_url" {
   description = "Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID)"
   type        = string
-  
+
   validation {
-    condition = var.prefect_api_url != ""
+    condition     = var.prefect_api_url != ""
     error_message = "Variable `prefect_api_url` must be defined"
   }
 }
@@ -58,9 +58,9 @@ variable "prefect_api_key" {
   description = "Prefect Cloud API key"
   type        = string
   sensitive   = true
-  
+
   validation {
-    condition = var.prefect_api_key != ""
+    condition     = var.prefect_api_key != ""
     error_message = "Variable `prefect_api_key` must be defined"
   }
 }
@@ -91,7 +91,7 @@ variable "container_ip_address_type" {
 
 variable "container_subnet_ids" {
   description = "IDs of the subnets the container instance should be placed in"
-  type = set(string)
+  type        = set(string)
   default     = null
 }
 

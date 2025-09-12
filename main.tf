@@ -18,14 +18,14 @@ resource "azurerm_user_assigned_identity" "this" {
 
 data "azurerm_role_definition" "this" {
   for_each = var.prefect_worker_azure_managed_role_attachment
-  
+
   name = each.value
 }
 
 # Attach Azure Managed roles to the User Identity
 resource "azurerm_role_assignment" "this" {
   for_each = var.prefect_worker_azure_managed_role_attachment
-  
+
   scope              = data.azurerm_resource_group.this.id
   principal_id       = azurerm_user_assigned_identity.this.principal_id
   role_definition_id = data.azurerm_role_definition.this[each.key].role_definition_id
@@ -44,9 +44,9 @@ resource "azurerm_container_group" "this" {
   }
 
   ip_address_type = var.container_ip_address_type
-  subnet_ids = var.container_subnet_ids
+  subnet_ids      = var.container_subnet_ids
 
-  dns_name_label  = var.container_dns_name_label
+  dns_name_label = var.container_dns_name_label
 
   container {
     name   = local.container_instance_container_name

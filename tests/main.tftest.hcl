@@ -12,12 +12,12 @@ mock_provider "azurerm" {
       role_definition_id = "/subscriptions/12345678-1234-9876-4563-123456789012/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
     }
   }
-  
+
   mock_resource "azurerm_user_assigned_identity" {
     defaults = {
-      id                 = "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/prefect-test-pool"
-      name               = "prefect-test-pool"
-      location           = "eastus"
+      id                  = "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/prefect-test-pool"
+      name                = "prefect-test-pool"
+      location            = "eastus"
       resource_group_name = "test-rg"
     }
   }
@@ -64,9 +64,9 @@ run "validate_resource_names" {
     condition     = azurerm_user_assigned_identity.this.name == "prefect-${lower(var.work_pool_name)}"
     error_message = "Managed user identity name should be correctly set"
   }
-  
+
   assert {
-    condition = azurerm_container_group.this.name == "prefect-worker-${lower(var.work_pool_name)}"
+    condition     = azurerm_container_group.this.name == "prefect-worker-${lower(var.work_pool_name)}"
     error_message = "Container group name should be correctly set"
   }
 }
@@ -75,8 +75,8 @@ run "validate_container_resources" {
   command = apply
 
   variables {
-    container_cpu       = "2"
-    container_memory    = "4"
+    container_cpu    = "2"
+    container_memory = "4"
   }
 
   assert {
@@ -102,9 +102,9 @@ run "managed_identity_configuration" {
     condition     = azurerm_user_assigned_identity.this.location == data.azurerm_resource_group.this.location
     error_message = "Managed identity location should match resource group"
   }
-  
+
   assert {
-    condition = length(azurerm_role_assignment.this) == length(var.prefect_worker_azure_managed_role_attachment)
+    condition     = length(azurerm_role_assignment.this) == length(var.prefect_worker_azure_managed_role_attachment)
     error_message = "All specified roles should be assigned to the managed identity"
   }
 
@@ -171,12 +171,12 @@ run "tags" {
   }
 
   assert {
-    condition = alltrue([for k, v in var.tags : contains(keys(azurerm_user_assigned_identity.this.tags), k)])
+    condition     = alltrue([for k, v in var.tags : contains(keys(azurerm_user_assigned_identity.this.tags), k)])
     error_message = "All specified tags should be applied to resources"
   }
-  
+
   assert {
-    condition = alltrue([for k, v in var.tags : contains(keys(azurerm_container_group.this.tags), k)])
+    condition     = alltrue([for k, v in var.tags : contains(keys(azurerm_container_group.this.tags), k)])
     error_message = "All specified tags should be applied to resources"
   }
 }
