@@ -8,7 +8,7 @@ locals {
 }
 
 # User Assigned Managed Identity
-resource "azurerm_user_assigned_identity" "worker_identity" {
+resource "azurerm_user_assigned_identity" "this" {
   name                = coalesce(var.user_assigned_identity_name_override, "prefect-${lower(var.work_pool_name)}")
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
@@ -27,12 +27,12 @@ resource "azurerm_role_assignment" "this" {
   for_each = var.prefect_worker_azure_managed_role_attachment
   
   scope              = data.azurerm_resource_group.this.id
-  principal_id       = azurerm_user_assigned_identity.worker_identity.principal_id
+  principal_id       = azurerm_user_assigned_identity.this.principal_id
   role_definition_id = data.azurerm_role_definition.this[each.key].role_definition_id
 }
 
 # Container Instance for Prefect Worker
-resource "azurerm_container_group" "prefect_worker" {
+resource "azurerm_container_group" "this" {
   name                = local.container_instance_name
   resource_group_name = data.azurerm_resource_group.this.name
   location            = data.azurerm_resource_group.this.location
@@ -40,7 +40,7 @@ resource "azurerm_container_group" "prefect_worker" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.worker_identity.id]
+    identity_ids = [azurerm_user_assigned_identity.this.id]
   }
 
   ip_address_type = var.container_ip_address_type
