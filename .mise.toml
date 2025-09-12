@@ -8,3 +8,6 @@ run = "terraform-docs --config=.terraform-docs.yaml ."
 
 [tasks.test]
 run = "terraform test"
+
+[tasks.fmt]
+run = "terraform fmt -recursive"
