@@ -6,6 +6,11 @@ variable "work_pool_name" {
 variable "resource_group_name" {
   description = "Name for the Azure Resource Group"
   type        = string
+  
+  validation {
+    condition = var.resource_group_name != ""
+    error_message = "Variable `resource_group_name` must be defined"
+  }
 }
 
 variable "location" {
@@ -20,12 +25,12 @@ variable "user_assigned_identity_name_override" {
   default     = null
   
   validation {
-    condition = var.user_assigned_identity_name_override == null || (length(var.user_assigned_identity_name_override) > 0 && length(var.user_assigned_identity_name_override) <= 24)
+    condition = var.user_assigned_identity_name_override == null ? true : (length(var.user_assigned_identity_name_override) > 0 && length(var.user_assigned_identity_name_override) <= 24)
     error_message = "Name must be less than 24 characters."
   }
 
   validation {
-    condition     = var.user_assigned_identity_name_override == null || can(regex("^[A-Za-z0-9_-]+$", var.user_assigned_identity_name_override))
+    condition     = var.user_assigned_identity_name_override == null ? true : can(regex("^[A-Za-z0-9_-]+$", var.user_assigned_identity_name_override))
     error_message = "The value may only contain alphanumeric characters, underscores, and dashes."
   }
 }
@@ -42,12 +47,22 @@ variable "prefect_worker_azure_managed_role_attachment" {
 variable "prefect_api_url" {
   description = "Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID)"
   type        = string
+  
+  validation {
+    condition = var.prefect_api_url != ""
+    error_message = "Variable `prefect_api_url` must be defined"
+  }
 }
 
 variable "prefect_api_key" {
   description = "Prefect Cloud API key"
   type        = string
   sensitive   = true
+  
+  validation {
+    condition = var.prefect_api_key != ""
+    error_message = "Variable `prefect_api_key` must be defined"
+  }
 }
 
 variable "prefect_image_tag" {
@@ -58,14 +73,14 @@ variable "prefect_image_tag" {
 
 variable "container_cpu" {
   description = "CPU allocation for the container"
-  type        = string
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "container_memory" {
   description = "Memory allocation for the container in GB"
-  type        = string
-  default     = "1.5"
+  type        = number
+  default     = 1.5
 }
 
 variable "container_ip_address_type" {
