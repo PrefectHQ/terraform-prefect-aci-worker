@@ -65,8 +65,8 @@ variable "prefect_api_key" {
   }
 }
 
-variable "prefect_image_tag" {
-  description = "Prefect Docker image tag"
+variable "container_image" {
+  description = "Container image for the Prefect Worker"
   type        = string
   default     = "prefecthq/prefect:3-python3.11"
 }
@@ -81,6 +81,12 @@ variable "container_memory" {
   description = "Memory allocation for the container in GB"
   type        = number
   default     = 1.5
+}
+
+variable "container_commands_override" {
+  description = "Specifying this overrides the default container command for the Prefect Worker"
+  type        = list(string)
+  default     = null
 }
 
 variable "container_ip_address_type" {

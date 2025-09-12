@@ -71,12 +71,13 @@ run "validate_resource_names" {
   }
 }
 
-run "validate_container_resources" {
+run "validate_container_resources_overrides" {
   command = apply
 
   variables {
-    container_cpu    = "2"
-    container_memory = "4"
+    container_cpu               = "2"
+    container_memory            = "4"
+    container_commands_override = ["foo", "bar"]
   }
 
   assert {
@@ -87,6 +88,21 @@ run "validate_container_resources" {
   assert {
     condition     = azurerm_container_group.this.container[0].memory == var.container_memory
     error_message = "Container memory must be set correctly"
+  }
+
+  assert {
+    condition     = azurerm_container_group.this.container[0].environment_variables["PREFECT_API_URL"] == var.prefect_api_url
+    error_message = "Container environment variable PREFECT_API_URL must be set correctly"
+  }
+
+  assert {
+    condition     = azurerm_container_group.this.container[0].secure_environment_variables["PREFECT_API_KEY"] == var.prefect_api_key
+    error_message = "Container secure environment variable PREFECT_API_KEY must be set correctly"
+  }
+
+  assert {
+    condition     = azurerm_container_group.this.container[0].commands == var.container_commands_override
+    error_message = "Container should use overridden commands when provided"
   }
 }
 
@@ -135,6 +151,25 @@ run "container_group_configuration" {
   assert {
     condition     = contains(azurerm_container_group.this.identity[0].identity_ids, azurerm_user_assigned_identity.this.id)
     error_message = "Container group should use the correct managed identity"
+  }
+
+  assert {
+    condition     = azurerm_container_group.this.container[0].image == var.container_image
+    error_message = "Container image should match the specified Prefect image tag"
+  }
+
+  assert {
+    condition     = anytrue([for str in azurerm_container_group.this.container[0].commands : strcontains("prefect worker start --pool test-pool --type azure-container-instance", str)])
+    error_message = "Container command should correctly reference the work pool name"
+  }
+
+  assert {
+    condition = azurerm_container_group.this.container[0].commands == tolist([
+      "/bin/bash",
+      "-c",
+      "pip install prefect-azure && prefect worker start --pool test-pool --type azure-container-instance"
+    ])
+    error_message = "Container must have the default commands set if no override is provided"
   }
 }
 

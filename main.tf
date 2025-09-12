@@ -50,18 +50,21 @@ resource "azurerm_container_group" "this" {
 
   container {
     name   = local.container_instance_container_name
-    image  = var.prefect_image_tag
+    image  = var.container_image
     cpu    = var.container_cpu
     memory = var.container_memory
 
-    commands = [
+    commands = coalesce(var.container_commands_override, [
       "/bin/bash",
       "-c",
       "pip install prefect-azure && prefect worker start --pool ${var.work_pool_name} --type azure-container-instance"
-    ]
+    ])
+
+    environment_variables = {
+      PREFECT_API_URL = var.prefect_api_url
+    }
 
     secure_environment_variables = {
-      PREFECT_API_URL = var.prefect_api_url
       PREFECT_API_KEY = var.prefect_api_key
     }
 

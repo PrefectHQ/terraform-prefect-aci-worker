@@ -64,15 +64,16 @@ No modules.
 | <a name="input_prefect_api_url"></a> [prefect\_api\_url](#input\_prefect\_api\_url) | Prefect Cloud API URL (e.g., https://api.prefect.cloud/api/accounts/ACCOUNT_ID/workspaces/WORKSPACE_ID) | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name for the Azure Resource Group | `string` | n/a | yes |
 | <a name="input_work_pool_name"></a> [work\_pool\_name](#input\_work\_pool\_name) | Name for the Prefect work pool | `string` | n/a | yes |
+| <a name="input_container_commands_override"></a> [container\_commands\_override](#input\_container\_commands\_override) | Specifying this overrides the default container command for the Prefect Worker | `list(string)` | `null` | no |
 | <a name="input_container_cpu"></a> [container\_cpu](#input\_container\_cpu) | CPU allocation for the container | `number` | `1` | no |
 | <a name="input_container_dns_name_label"></a> [container\_dns\_name\_label](#input\_container\_dns\_name\_label) | DNS name label for the container group | `string` | `null` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | Container image for the Prefect Worker | `string` | `"prefecthq/prefect:3-python3.11"` | no |
 | <a name="input_container_instance_container_name_override"></a> [container\_instance\_container\_name\_override](#input\_container\_instance\_container\_name\_override) | Overrides the generated Azure Container Instance container resource name | `string` | `null` | no |
 | <a name="input_container_instance_name_override"></a> [container\_instance\_name\_override](#input\_container\_instance\_name\_override) | Overrides the generated Azure Container Instance resource name | `string` | `null` | no |
 | <a name="input_container_ip_address_type"></a> [container\_ip\_address\_type](#input\_container\_ip\_address\_type) | IP address type for the container group (Public, Private, None) | `string` | `"Public"` | no |
 | <a name="input_container_memory"></a> [container\_memory](#input\_container\_memory) | Memory allocation for the container in GB | `number` | `1.5` | no |
 | <a name="input_container_subnet_ids"></a> [container\_subnet\_ids](#input\_container\_subnet\_ids) | IDs of the subnets the container instance should be placed in | `set(string)` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure region for resources | `string` | `"eastus"` | no |
-| <a name="input_prefect_image_tag"></a> [prefect\_image\_tag](#input\_prefect\_image\_tag) | Prefect Docker image tag | `string` | `"prefecthq/prefect:3-python3.11"` | no |
 | <a name="input_prefect_worker_azure_managed_role_attachment"></a> [prefect\_worker\_azure\_managed\_role\_attachment](#input\_prefect\_worker\_azure\_managed\_role\_attachment) | Azure Managed roles to attach to the Prefect Worker's Azure User Assigned Identity | `set(string)` | <pre>[<br/>  "Azure Container Instances Contributor Role",<br/>  "Managed Identity Operator"<br/>]</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to all resources | `map(string)` | `{}` | no |
 | <a name="input_user_assigned_identity_name_override"></a> [user\_assigned\_identity\_name\_override](#input\_user\_assigned\_identity\_name\_override) | Override the generated User Assigned Identity name | `string` | `null` | no |
