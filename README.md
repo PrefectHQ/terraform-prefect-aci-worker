@@ -1,8 +1,6 @@
 # Prefect Worker Azure Container Instances Terraform Module 
 
-⚠️ This project is currently a work in progress and may not be fully functional or stable. Use at your own risk. ⚠️
-
-This module deploys a [Prefect worker](https://docs.prefect.io/v3/concepts/workers) to Azure Container Instances (ACI).
+This module deploys a [Prefect worker](https://docs.prefect.io/v3/concepts/workers) to an Azure Container Instance (ACI).
 
 ## Requirements
 
