@@ -26,7 +26,7 @@ terraform apply
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4.0 |
 | <a name="requirement_prefect"></a> [prefect](#requirement\_prefect) | >= 2.0.0 |
 | <a name="requirement_utils"></a> [utils](#requirement\_utils) | >= 1.0.0 |
@@ -34,7 +34,7 @@ terraform apply
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4.0 |
 | <a name="provider_prefect"></a> [prefect](#provider\_prefect) | >= 2.0.0 |
 | <a name="provider_utils"></a> [utils](#provider\_utils) | >= 1.0.0 |
@@ -42,13 +42,13 @@ terraform apply
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_aci_worker"></a> [aci\_worker](#module\_aci\_worker) | prefecthq/aci-worker/prefect | >= 0.0.1 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 | [prefect_service_account.this](https://registry.terraform.io/providers/prefecthq/prefect/latest/docs/resources/service_account) | resource |
 | [prefect_work_pool.this](https://registry.terraform.io/providers/prefecthq/prefect/latest/docs/resources/work_pool) | resource |
@@ -63,7 +63,7 @@ terraform apply
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_azure_resource_group_location"></a> [azure\_resource\_group\_location](#input\_azure\_resource\_group\_location) | The location of the Azure Resource Group to be created | `string` | `"eastus"` | no |
 | <a name="input_azure_resource_group_name"></a> [azure\_resource\_group\_name](#input\_azure\_resource\_group\_name) | The Azure Resource Group name to deploy resources | `string` | `"prefect-aci-worker"` | no |
 
